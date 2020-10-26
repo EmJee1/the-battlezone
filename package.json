@@ -1,0 +1,24 @@
+{
+  "name": "the-battlezone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmJee1/the-battlezone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EmJee1/the-battlezone/issues"
+  },
+  "homepage": "https://github.com/EmJee1/the-battlezone#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "minecraft-protocol": "^1.19.0",
+    "mysql": "^2.18.1"
+  }
+}
