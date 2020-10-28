@@ -17,7 +17,7 @@ const client = mc.createClient({
 })
 
 // listen for the login event
-client.on('login', () => {
+client.once('login', () => {
     console.log('client logged in!')
 })
 
@@ -26,8 +26,14 @@ client.on('chat', packet => {
     // parse the raw JSON data from the message request
     const parsedMsgObject = JSON.parse(packet.message)
     if(parsedMsgObject.translate === 'commands.message.display.incoming') {
-        console.log("Message sender:", parsedMsgObject.with[0].insertion)
-        console.log("Message text:", parsedMsgObject.with[1].text)
+        const fullInputText = parsedMsgObject.with[1].text
+        const messageSender = parsedMsgObject.with[0].insertion
+
+        const commandName = fullInputText.substr(0, fullInputText.indexOf('-'))
+        const commandArgs = fullInputText.substring(fullInputText.indexOf('-') + 1)
+
+        console.log(commandName)
+        console.log(commandArgs)
     } else {
         console.log("Some other chat message")
     }
