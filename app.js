@@ -24,14 +24,10 @@ client.on('login', () => {
 // listen for chat messages
 client.on('chat', packet => {
     // capture the raw JSON data from the message request
-    const jsonMsg = JSON.parse(packet.message)
-    if(jsonMsg.translate == 'chat.type.announcement' || jsonMsg.translate == 'chat.type.text') {
-        // extract username and password from the message packet
-        const username = jsonMsg.with[0].text
-        const msg = jsonMsg.with[1]
-        // return the function to stop execution when the user client sent the chat message
-        if(username === client.username) return
-        // sent a response
-        client.write('chat', { message: msg.text })
-    }
+    console.log(packet)
+    const parsedMessage = JSON.parse(packet.message)
+    // extract username and password from the message packet
+    const messageText = parsedMessage.extra[0].text
+    // sent a response
+    client.write('chat', { message: `The sent message: ${messageText}` })
 })
