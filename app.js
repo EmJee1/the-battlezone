@@ -25,9 +25,5 @@ client.on('login', () => {
 client.on('chat', packet => {
     // capture the raw JSON data from the message request
     console.log(packet)
-    const parsedMessage = JSON.parse(packet.message)
-    // extract username and password from the message packet
-    const messageText = parsedMessage.extra[0].text
-    // sent a response
-    client.write('chat', { message: `The sent message: ${messageText}` })
+    console.log(JSON.parse(packet))
 })

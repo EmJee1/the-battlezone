@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/EmJee1/the-battlezone#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "minecraft-protocol": "^1.19.0",
     "mysql": "^2.18.1"
