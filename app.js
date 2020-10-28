@@ -25,5 +25,5 @@ client.on('login', () => {
 client.on('chat', packet => {
     // capture the raw JSON data from the message request
     console.log(packet)
-    console.log(JSON.parse(packet))
+    console.log(JSON.parse(packet.message))
 })
