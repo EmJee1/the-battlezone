@@ -26,11 +26,9 @@ client.on('chat', packet => {
     // parse the raw JSON data from the message request
     const parsedMsgObject = JSON.parse(packet.message)
     if(parsedMsgObject.translate === 'commands.message.display.incoming') {
-        console.log(packet)
+        console.log(parsedMsgObject)
         console.log("Direct command to the bot")
         console.log("Message sender:" + parsedMsgObject.with[0].insertion)
-        console.log("Message text:" + parsedMsgObject.text)
-        console.log("Other data:", parsedMsgObject.with[0].hoverEvent.contents.name)
     } else {
         console.log("Some other chat message")
     }
