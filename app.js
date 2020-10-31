@@ -25,32 +25,28 @@ const client = mc.createClient({
 // listen for the login event
 client.once('login', () => {
     console.log('client logged in!')
+    client.write('chat', { message: 'testbericht!' })
 })
 
 // listen for chat messages
 client.on('chat', packet => {
     // parse the raw JSON data from the message request
     const parsedMsgObject = JSON.parse(packet.message)
+    console.log(parsedMsgObject);
     if(parsedMsgObject.translate === 'commands.message.display.incoming') {
         // get the sender of the message
         const messageSender = parsedMsgObject.with[0].insertion
         // get the command name and the provided args
-        let commandName, commandArgs
-        if(parsedMsgObject.with[1].text.indexOf('-') !== -1) {
-            commandName = parsedMsgObject.with[1].text.substr(0, parsedMsgObject.with[1].text.indexOf('-'))
-            commandArgs = parsedMsgObject.with[1].text.substring(parsedMsgObject.with[1].text.indexOf('-') + 1)    
-        } else {
-            commandName = parsedMsgObject.with[1].text
-            commandArgs = null
-        }
+        const strWithSpaces = parsedMsgObject.with[1].text.split('-').join(' ')
+        const commandName = strWithSpaces.substr(0, strWithSpaces.indexOf(' '))
+        const commandArgs = strWithSpaces.substring(strWithSpaces.indexOf(' ') + 1)
 
         console.log(commandName)
-        console.log(commandArgs)
 
         if(commandName == 'ping') {
-            console.log('Ping triggered')
-            client.write('chat', { message: pingCommand(messageSender) })
+            client.write('chat', { message: 'testbericht!' })
         }
+
     } else {
         console.log("Some other chat message")
     }

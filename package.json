@@ -20,6 +20,7 @@
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "minecraft-protocol": "^1.19.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.6"
   }
 }
