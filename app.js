@@ -7,7 +7,9 @@ const bodyParser = require('body-parser')
 const bot = require('./other/minecraft_connection/minecraft_connection')
 
 // get functions from the functions folder
-const parsers = require('./functions/other/parsers')
+const playerJoin = require('./functions/other/playerJoin')
+
+
 
 // initialize the express api
 const express = require('express')
@@ -19,13 +21,22 @@ app.listen(3000, () => console.log('Express listening on port 3000'))
 
 // get the commands handler
 const handleMcCommands = require('./handleMcCommands')
+const { exit, exitCode } = require('process')
 
 // listen for the login event
 bot.once('login', () => {
-    console.log('client logged in!')
+    setTimeout(() => { bot.chat(`/mvtp Pherias theBattleZone`) }, 200);
+    setTimeout(() => { bot.chat(`/gamemode spectator Pherias`); console.log('login done'); }, 500);
 })
 
-// listen for chat messages
-bot.on('chat', (username, chat) => {
-    handleMcCommands(username, chat, bot)
+
+bot.on('playerJoined', user => {
+    playerJoin(user)
+});
+
+bot.on('message', chat => {
+    handleMcCommands(chat)
 })
+
+
+

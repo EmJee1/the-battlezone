@@ -1,27 +1,52 @@
 // get the commands from the commands folder
-const pingCommand = require('./functions/commands/ping.commands')
+const credits = require('./functions/other/credits')
+const faction = require('./functions/other/faction')
+const deploy = require('./functions/other/deploy')
+const { getUserByMCusername } = require('./database/queries/getUser.query')
+const register = require('./functions/other/register')
 
-const handleMcCommands = (username, chat, bot) => {
-    // return if the username is the bot, or the username is not 'you'
-    if(username === bot.username) return
-    if(username !== 'you') return
+const bot = require('./other/minecraft_connection/minecraft_connection')
 
-    // get the sender and the message text
-    const msgObj = parsers.parseMessageObject(chat)
-    const sender = msgObj.sender
-    const commandargsArr = msgObj.commandArgs
 
-    if(commandargsArr[0] == 'ping') {
-        bot.chat(pingCommand(sender))
-    } else if(commandargsArr[0] == 'faction') {
-        // the faction commandset
-        if(commandargsArr[1] == 'join') {
-            // join a faction
-        } else if(commandargsArr[1] == 'create') {
-            // create a faction
-        } else if(commandargsArr[1] == 'members') {
-            // list all the memebers of a faction
+const handleMcCommands = (chat) => {
+    if (chat.color == 'light_purple') {
+        chat = { 
+            username: chat.text.split('-')[0],
+            comm: chat.text.split('-')[1]
         }
+        chat.comm = chat.comm.split(' ')
+        if (chat.comm[0] == 'register') {
+            register(chat)
+                .then(res => {
+                    console.log(res)
+                })
+        }
+        getUserByMCusername(chat.username)
+        .then(res => {
+            if (res[0] !== undefined) {
+                
+                if (chat.comm[0] == 'credits') {
+                    credits(chat)
+                        .then(res => {
+                            console.log(res)
+                        })
+                }
+                if (chat.comm[0] == 'faction') {
+                    faction(chat)
+                        .then(res => {
+                            console.log(res)
+                        })
+                }
+                if (chat.comm[0] == 'deploy') {
+                    deploy(chat)
+                        .then(res => {
+                            console.log(res)
+                        })
+                }
+            } else if (res[0] == undefined) {
+                bot.chat(`/tellraw ${chat.username} {"text":"you need to be registered to use that command","bold":true,"color":"green"}`)
+            }
+        })
     }
 }
 
