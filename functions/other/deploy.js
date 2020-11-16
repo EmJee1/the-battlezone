@@ -26,6 +26,7 @@ const deploy = chat => {
                                 bot.chat(`/give ${chat.username} minecraft:oak_sapling 1`)
                                 bot.chat(`/give ${chat.username} minecraft:acacia_sapling 1`)
                                 bot.chat(`/give ${chat.username} minecraft:dark_oak_sapling 1`)
+                                bot.chat(`/give ${chat.username} minecraft:sugar_cane 1`)
 
                                 bot.chat(`/tellraw @a {"text":"${chat.username} is getting deployed","bold":true,"color":"green"}`)
                                 bot.chat(`/execute as ${chat.username} run tp ${pos2[0]} ${pos3} ${pos2[2]}`)
