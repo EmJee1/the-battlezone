@@ -74,8 +74,23 @@ const joinFaction = (factionName, username) => {
     })
 }
 
+// update faction when deployed
+const updateDeployed = (factionName) => {
+    return new Promise ((resolve, reject) => {
+        connection.query("UPDATE mc_factions SET mc_faction_deployed='1' WHERE mc_faction_name=?",
+        [factionName], (err, rows) => {
+            if(err) { reject(err) }
+            else {
+                resolve(rows)
+            }
+        })
+    })
+}
+
+
+
 
 
 
 // export the query
-module.exports = {insertNewFaction, joinFaction, getFactionByFactionName, getFactionByFactionId}
+module.exports = {insertNewFaction, joinFaction, getFactionByFactionName, getFactionByFactionId, updateDeployed}

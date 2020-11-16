@@ -1,4 +1,4 @@
-const { insertNewFaction, joinFaction} = require('../../database/queries/faction.query')
+const { getFactionByFactionId, insertNewFaction, joinFaction} = require('../../database/queries/faction.query')
 const { getUserByMCusername } = require('../../database/queries/getUser.query')
 const bot = require('../../other/minecraft_connection/minecraft_connection')
 
@@ -30,13 +30,6 @@ const faction = chat => {
                             joinFaction(chat.comm[2], chat.username)
                             .then(res => {
                                 bot.chat(`/tellraw ${chat.username} {"text":"you have joined the faction succesfully","bold":true,"color":"green"}`)
-
-                                bot.chat(`/give ${chat.username} minecraft:oak_wood 16`)
-                                bot.chat(`/give ${chat.username} minecraft:apple 10`)
-                                bot.chat(`/give ${chat.username} minecraft:leather_chestplate`)
-                                bot.chat(`/give ${chat.username} minecraft:wooden_sword`)
-                                bot.chat(`/give ${chat.username} minecraft:wooden_pickaxe`)
-                                bot.chat(`/give ${chat.username} minecraft:wooden_axe`)
                                 resolve({valid: true})
                             })
                             .catch(err => {
@@ -46,6 +39,40 @@ const faction = chat => {
                         } else bot.chat(`/tellraw ${chat.username} {"text":"you allready belong to a faction","bold":true,"color":"green"}`)
                     } else bot.chat(`/tellraw ${chat.username} {"text":"use a valid name like: /. faction join <faction-name> ","bold":true,"color":"green"}`)
                 } else bot.chat(`/tellraw ${chat.username} {"text":"you can join a faction or create one","bold":true,"color":"green"}`)
+
+
+                if (chat.comm[1] == 'info') {
+                    getUserByMCusername(chat.username)
+                    .then (res => {
+                        if (res[0].mc_player_faction_id !== 0) {
+                            getFactionByFactionId(res[0].mc_player_faction_id)
+                            .then(res => {
+                                bot.chat(`/tellraw ${chat.username} {"text":"Faction name: ${res[0].mc_faction_name}","bold":true,"color":"yellow"}`)
+                                bot.chat(`/tellraw ${chat.username} {"text":"Faction level: ${res[0].mc_faction_level}","bold":true,"color":"yellow"}`)
+                                resolve({valid: true})
+                            })
+                        } else bot.chat(`/tellraw ${chat.username} {"text":"you are not member of a faction yet","bold":true,"color":"green"}`)
+                        resolve({valid: true})
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        reject({valid: false})
+                    })
+
+
+
+
+
+                    // insertNewFaction(name)
+                    // .then(res => {
+                    //     bot.chat(`/tellraw ${chat.username} {"text":"faction created succesfully","bold":true,"color":"green"}`)
+                    //     resolve({valid: true})
+                    // })
+                    // .catch(err => {
+                    //     console.error(err)
+                    //     reject({valid: false})
+                    // })
+                }
             })
     })
 }
