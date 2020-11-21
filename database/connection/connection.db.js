@@ -9,7 +9,13 @@ const database_username = process.env.DATABASE_USERNAME
 const database_password = process.env.DATABASE_PASSWORD
 const database_name = process.env.DATABASE_NAME
 const database_port = process.env.DATABASE_PORT
-
+console.log({
+    host: database_connection_uri,
+    user: database_username,
+    password: database_password,
+    database: database_name,
+    port: database_port
+});
 // create the connection object
 const connection = mysql.createConnection({
     host: database_connection_uri,
