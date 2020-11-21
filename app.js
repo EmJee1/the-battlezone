@@ -17,7 +17,7 @@ const app = express()
 app.use(bodyParser.json())
 const router = require('./router/router')
 app.use(router)
-app.listen(3000, () => console.log('Express listening on port 3000'))
+app.listen(process.env.PORT || 3100, () => console.log('Express listening on port 3100'))
 
 // get the commands handler
 const handleMcCommands = require('./handleMcCommands')
