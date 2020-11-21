@@ -19,6 +19,7 @@ const router = require('./router/router')
 app.use(router)
 app.listen(process.env.PORT || 3100, () => console.log('Express listening on port 3100'))
 
+
 // get the commands handler
 const handleMcCommands = require('./handleMcCommands')
 const { exit, exitCode } = require('process')
